@@ -1,0 +1,425 @@
+W_PersonalIncome=[]
+W_MPF=[]
+W_NetIncome=[]
+W_NetChargable=[]
+W_tax=[]
+
+H_PersonalIncome=[]
+H_MPF=[]
+H_NetIncome=[]
+H_NetChargable=[]
+H_tax=[]
+
+J_NetIncome=[]
+J_NetChargable=[]
+J_tax=[]
+
+title = ["WIFE","Personal income","MPF","Net Income","Net Charge","Payable Tax", "Payable Tax(After Reduction)"]
+titleH = ["HUSBAND","Personal income","MPF","Net Income","Net Charge","Payable Tax" ,"Payable Tax(After Reduction)"]
+titleJ = ["WIFE Personal income","Husband Personal income","Wife MPF","Husband MPF","Joint Net Income"," Joint Net Charge","Joint Payable Tax" ,"Payable Tax(After Reduction)"]
+W_Net_Income1=[]
+H_Net_Income1=[]
+
+W_taxReduction=[]    
+H_taxReduction=[]
+J_taxReduction=[]
+T_taxReduction=[]
+
+ST=[]
+JT=[]
+
+def Wife_Tax(Wife_Personal_Income):
+	#calculate the MPF of Wife
+	MPF=0.05
+	x = int(Wife_Personal_Income)*MPF
+
+	if Wife_Personal_Income < 85200:
+    	Wife_MPF=0
+    	W_MPF.append(float(Wife_MPF))
+	elif x > 18000:
+    	Wife_MPF=18000
+    	W_MPF.append(float(Wife_MPF))
+	else:
+    	Wife_MPF=round(x,2)
+    	W_MPF.append(float(Wife_MPF))
+   	 
+	#calculate the net income of wife    
+	Wife_Net_Income=Wife_Personal_Income - Wife_MPF
+	W_Net_Income1.append(float(Wife_Net_Income))
+    
+	if Wife_Net_Income > 2022000:
+    	W_NetIncome.append(float(Wife_Net_Income))
+    	Wife_Net_Chargable = Wife_Net_Income
+    	WNC=round(Wife_Net_Chargable,2)
+    	W_NetChargable.append(float(WNC))
+    	Wife_tax=Wife_Net_Chargable*0.15
+    	W_tax.append(float(Wife_tax))
+   	 
+	elif Wife_Net_Income > 132000:
+    	W_NetIncome.append(float(Wife_Net_Income))
+    	Wife_Net_Chargable = Wife_Net_Income-132000
+    	WNC=round(Wife_Net_Chargable,2)
+    	W_NetChargable.append(float(WNC))
+   	 
+    	if Wife_Net_Chargable > 0:
+        	if Wife_Net_Chargable<=50000:
+            	Wife_tax=Wife_Net_Chargable*0.02
+            	WT=round(Wife_tax,2)
+            	W_tax.append(float(WT))
+        	elif Wife_Net_Chargable<=100000:
+            	Wife_tax= 50000*0.02 + (Wife_Net_Chargable-50000)*0.06
+            	WT=round(Wife_tax,2)
+            	W_tax.append(float(WT))
+        	elif Wife_Net_Chargable <= 150000:
+            	Wife_tax= 50000*0.02 + 50000*0.06+(Wife_Net_Chargable-100000)*0.1
+            	WT=round(Wife_tax,2)
+            	W_tax.append(float(WT))
+        	elif Wife_Net_Chargable <= 200000:
+            	Wife_tax= 50000*0.02 + 50000*0.06 + 50000*0.1 + (Wife_Net_Chargable-150000)*0.14
+            	WT=round(Wife_tax,2)
+            	W_tax.append(float(WT))
+        	else:
+            	Wife_tax= 50000*0.02 + 50000*0.06 + 50000*0.1 + 50000*0.14 + (Wife_Net_Chargable-200000)*0.17
+            	WT=round(Wife_tax,2)
+            	W_tax.append(float(WT))
+    	else:
+        	Wife_tax="Nill"
+        	W_tax.append(str(Wife_tax))
+	else:
+    	Wife_Net_Income="Nill"
+    	W_NetIncome.append(str(Wife_Net_Income))
+    	Wife_Net_Chargable="Nill"
+    	W_NetChargable.append(str(Wife_Net_Chargable))
+    	Wife_tax="Nill"
+    	W_tax.append(str(Wife_tax))
+    
+	return Wife_tax
+   	 
+def Husband_Tax(Husband_Personal_Income):
+	#calculate the MPF of Husband
+	MPF=0.05
+	y = int(Husband_Personal_Income)*MPF
+
+	if Husband_Personal_Income < 85200:
+    	Husband_MPF=0
+    	H_MPF.append(float(Husband_MPF))
+	elif y > 18000:
+    	Husband_MPF=18000
+    	H_MPF.append(float(Husband_MPF))
+	else:
+    	Husband_MPF=round(y, 2)
+    	H_MPF.append(float(Husband_MPF))
+   	 
+	#calculate the net income of Husband    
+	Husband_Net_Income=Husband_Personal_Income - Husband_MPF
+	H_Net_Income1.append(float(Husband_Net_Income))
+    
+	if Husband_Net_Income > 2022000:
+    	H_NetIncome.append(float(Husband_Net_Income))
+    	Husband_Net_Chargable = Husband_Net_Income
+    	HNC=round(Husband_Net_Chargable,2)
+    	H_NetChargable.append(float(HNC))
+    	Husband_tax=round(Husband_Net_Chargable*0.15,2)
+    	H_tax.append(float(Husband_tax))
+    
+	elif Husband_Net_Income > 132000:
+    	H_NetIncome.append(float(Husband_Net_Income))
+    	Husband_Net_Chargable=Husband_Net_Income-132000
+    	HNC=round(Husband_Net_Chargable,2)
+    	H_NetChargable.append(float(HNC))
+    	if Husband_Net_Chargable > 0:
+        	if Husband_Net_Chargable<=50000:
+            	Husband_tax=Husband_Net_Chargable*0.02
+            	HT=round(Husband_tax,2)
+            	H_tax.append(float(HT))
+        	elif Husband_Net_Chargable<=100000:
+            	Husband_tax= 50000*0.02 + (Husband_Net_Chargable-50000)*0.06
+            	HT=round(Husband_tax,2)
+            	H_tax.append(float(HT))
+        	elif Husband_Net_Chargable <= 150000:
+            	Husband_tax= 50000*0.02 + 50000*0.06+(Husband_Net_Chargable-100000)*0.1
+            	HT=round(Husband_tax,2)
+            	H_tax.append(float(HT))
+        	elif Husband_Net_Chargable <= 200000:
+            	Husband_tax= 50000*0.02 + 50000*0.06 + 50000*0.1 + (Husband_Net_Chargable-150000)*0.14
+            	HT=round(Husband_tax,2)
+            	H_tax.append(float(HT))
+        	else:
+            	Husband_tax= 50000*0.02 + 50000*0.06 + 50000*0.1 + 50000*0.14 + (Husband_Net_Chargable-200000)*0.17
+            	HT=round(Husband_tax,2)
+            	H_tax.append(float(HT))
+    	else:
+        	Husband_tax="Nill"
+        	H_tax.append(str(Husband_tax))
+	else:
+    	Husband_Net_Income="Nill"
+    	H_NetIncome.append(str(Husband_Net_Income))
+    	Husband_Net_Chargable="Nill"
+    	H_NetChargable.append(str(Husband_Net_Chargable))
+    	Husband_tax="Nill"
+    	H_tax.append(str(Husband_tax))
+    
+	return Husband_tax
+
+def Joint_Tax():
+	Joint_Net_Income =  W_Net_Income1[0] + H_Net_Income1[0]
+	if Joint_Net_Income > 0:
+    	J_NetIncome.append(Joint_Net_Income)
+    	#ensure no negative number are display
+   	 
+    	if Joint_Net_Income > 3144000:
+        	Joint_Net_Chargable = Joint_Net_Income
+        	J_NetChargable.append(float(Joint_Net_Chargable))
+        	Joint_tax=round(Joint_Net_Chargable*0.15,2)
+        	J_tax.append(float(Joint_tax))
+   	 
+    	elif Joint_Net_Income > 264000:
+        	Joint_Net_Chargable = Joint_Net_Income - 264000
+        	#calculate the Joint Tax
+        	if Joint_Net_Chargable > 0:
+            	J_NetChargable.append(float(Joint_Net_Chargable))
+            	if Joint_Net_Chargable<=50000:
+                    	Joint_tax=Joint_Net_Chargable*0.02
+                    	JT=round(Joint_tax,2)
+                    	J_tax.append(float(JT))
+            	elif Joint_Net_Chargable<=100000:
+                    	Joint_tax= 50000*0.02 + (Joint_Net_Chargable-50000)*0.06
+                    	JT=round(Joint_tax,2)
+                    	J_tax.append(float(JT))
+            	elif Joint_Net_Chargable <= 150000:
+                    	Joint_tax= 50000*0.02 + 50000*0.06+(Joint_Net_Chargable-100000)*0.1
+                    	JT=round(Joint_tax,2)
+                    	J_tax.append(float(JT))
+            	elif Joint_Net_Chargable <= 200000:
+                    	Joint_tax= 50000*0.02 + 50000*0.06 + 50000*0.1 + (Joint_Net_Chargable-150000)*0.14
+                    	JT=round(Joint_tax,2)
+                    	J_tax.append(float(JT))
+            	else:
+                	Joint_tax= 50000*0.02 + 50000*0.06 + 50000*0.1 + 50000*0.14 + (Joint_Net_Chargable-200000)*0.17
+                	JT=round(Joint_tax,2)
+                	J_tax.append(float(JT))
+        	else:
+            	Joint_Net_Chargable="Nill"
+            	J_NetChargable.append(str(Joint_Net_Chargable))
+            	Joint_tax="Nill"
+            	J_tax.append(str(Joint_tax))
+    	else:
+        	Joint_Net_Chargable="Nill"
+        	J_NetChargable.append(str(Joint_Net_Chargable))
+        	Joint_tax="Nill"
+        	J_tax.append(str(Joint_tax))
+	else:
+    	Joint_Net_Income="Nill"
+    	J_NetIncome.append(Joint_Net_Income)
+    	Joint_Net_Chargable="Nill"
+    	J_NetChargable.append(str(Joint_Net_Chargable))
+    	Joint_tax="Nill"
+    	J_tax.append(str(Joint_tax))
+   	 
+	return Joint_tax
+
+def separate():
+	TaxReduction()
+	#display separate tax payable
+	print("="*250)
+	print("\n")
+	print("%-20s%-20s%-20s%-20s%-20s%-20s%10s"%(title[0],title[1],title[2],title[3],title[4],title[5],title[6]))    
+	print("-"*250)
+	print("%-20s%-20s%-20s%-20s%-20s%-20s%10s"%("	",W_PersonalIncome[0],W_MPF[0],W_Net_Income1[0], W_NetChargable[0], W_tax[0], W_taxReduction[0]))
+
+	print(" "*250)
+	print("%-20s%-20s%-20s%-20s%-20s%-20s%10s"%(titleH[0],titleH[1],titleH[2],titleH[3],titleH[4],titleH[5],titleH[6]))
+	print("-"*250)   
+	print("%-20s%-20s%-20s%-20s%-20s%-20s%10s"%("	",H_PersonalIncome[0],H_MPF[0],H_Net_Income1[0], H_NetChargable[0], H_tax[0],H_taxReduction[0]))
+	print(" "*250)
+    
+	if W_tax[0] == "Nill":
+    	if H_taxReduction[0] == "Nill":   # W_tax[0] & H_tax[0] ="NILL"
+        	STotal=0
+        	print("**Both Wife and Husband no need to pay Tax")
+        	print("The total payable tax is $0 //")
+       	 
+    	else:
+        	STotal= H_tax[0]	# only W_tax[0] = "NILL"  
+        	print("**Wife no need to pay Tax")
+        	print("The total payable tax is $", STotal ,"//" )
+       	 
+	elif H_tax[0] == "Nill":
+    	if W_taxReduction[0] == "Nill":   # W_tax[0] & H_tax[0] ="NILL"
+        	STotal=0
+        	print("**Both Wife and Husband no need to pay Tax")
+        	print("The total payable tax is $0")
+       	 
+    	else:
+        	STotal= W_tax[0] 	# only H_tax[0] = "NILL"  
+        	print("**Husband no need to pay Tax",)
+        	print("The total payable tax is $", STotal,"//" )
+	else:
+    	STotal=W_tax[0]+H_tax[0]
+    	print('\n')
+    	print("Total Payable Tax in Seperate: $" ,float(STotal),"//")
+   	 
+	ST.append(float(STotal))
+	print('\n')
+	print("Total Payable Tax in Seperate (After Deduction): $" ,T_taxReduction[0],"//")        	 
+
+def TaxReduction():
+	if W_tax[0] !="Nill":
+    	if W_tax[0]>10000:
+        	WTotalAfterDeduction = W_tax[0]-10000
+        	W_taxReduction.append(WTotalAfterDeduction)     	 
+    	else:
+        	WTotalAfterDeduction = 0
+        	WAD = "Nill"
+        	W_taxReduction.append(str(WAD))       	 
+	else:
+    	WTotalAfterDeduction = 0
+    	WAD = "Nill"
+    	W_taxReduction.append(str(WAD))   	 
+	if H_tax[0] !="Nill":
+    	if H_tax[0]>10000:
+        	HTotalAfterDeduction = H_tax[0]-10000
+        	H_taxReduction.append(HTotalAfterDeduction)
+    	else:
+        	HTotalAfterDeduction = 0
+        	HAD = "Nill"
+        	H_taxReduction.append(str(HAD))
+	else:
+    	HTotalAfterDeduction = 0
+    	HAD = "Nill"
+    	H_taxReduction.append(str(HAD))
+	TotalAfterDeduction = WTotalAfterDeduction + HTotalAfterDeduction
+	T_taxReduction.append(TotalAfterDeduction)
+    
+def joint():
+	if J_tax[0] != "Nill":
+    	if J_tax[0]>10000:
+        	JTotalAfterDeduction = J_tax[0]-10000
+        	J_taxReduction.append(JTotalAfterDeduction)
+    	else:
+        	JTotalAfterDeduction = 0
+        	JAD = "Nill"
+        	J_taxReduction.append(JAD)
+	else:
+    	JTotalAfterDeduction = 0
+    	JAD = "Nill"
+    	J_taxReduction.append(JAD)
+	print("="*250)
+	print('\n')   	 
+	print("%-25s%-25s%-25s%-25s%-25s%-25s%-25s%10s"%(titleJ[0],titleJ[1],titleJ[2],titleJ[3],titleJ[4],titleJ[5],titleJ[6],titleJ[7]))
+	print('-'*250)
+	print("%-25s%-25s%-25s%-25s%-25s%-25s%-25s%10s"%(W_PersonalIncome[0],H_PersonalIncome[0],W_MPF[0],H_MPF[0],str(J_NetIncome[0]), str(J_NetChargable[0]), str(J_tax[0]), J_taxReduction[0]))
+    
+	print(" "*250)
+	if J_tax[0] == "Nill":
+    	JTotal=0
+    	print("Total Payable Tax in Joint: $0","//" )  
+	else:
+    	JTotal=J_tax[0]
+    	print("Total Payable Tax in Joint: $" ,J_tax[0],"//")  
+	print('\n')
+	print("Total Payable Tax in Joint(After Deduction): $" ,JTotalAfterDeduction,"//")
+    
+	JT.append(float(JTotal))
+
+def compare():
+	separate()
+	joint()
+	print("="*250)
+	print("_______________________________Conclude________________________________________________")
+	print(" "*250)
+	if ST[0] < JT[0]:
+    	print("It is cheaper to pay in seperate" )
+	elif ST[0] > JT[0]:
+    	print("It is cheaper to pay in joint" )
+	elif ST[0] == JT[0]:
+    	print("Both seperate and joint tax is same to pay" )
+	else:
+    	print("Error" )
+	print("\n")
+	print("______________________________________________________________________________________")   
+    
+def clear():
+	W_PersonalIncome.clear()
+	W_MPF.clear()
+	W_NetIncome.clear()
+	W_NetChargable.clear()
+	W_tax.clear()
+
+	H_PersonalIncome.clear()
+	H_MPF.clear()
+	H_NetIncome.clear()
+	H_NetChargable.clear()
+	H_tax.clear()
+    
+	J_NetIncome.clear()
+	J_NetChargable.clear()
+	J_tax.clear()
+    
+	W_taxReduction.clear()   
+	H_taxReduction.clear()
+	J_taxReduction.clear()
+	T_taxReduction.clear()
+    
+	W_Net_Income1.clear()
+	H_Net_Income1.clear()
+
+	ST.clear()
+	JT.clear()
+def main():
+	clear()
+    
+	print("Hi")
+	while True:
+    	try:
+        	Wife_Personal_Income = int(input("Please input wife's personal income: "))
+        	Husband_Personal_Income = int(input("Please input husband's personal income: "))
+    	except ValueError:
+        	print("\nUpexpected input,please re-input!!\n")
+        	continue
+   	 
+    	if Wife_Personal_Income < 0 or Husband_Personal_Income < 0:
+        	print("\nThe personal Income must not be negative!! Please re-input!\n")
+    	else:
+        	break
+	W_PersonalIncome.append(float(Wife_Personal_Income))
+	H_PersonalIncome.append(float(Husband_Personal_Income))
+	Wife_Tax(Wife_Personal_Income)
+	Husband_Tax(Husband_Personal_Income)
+	Joint_Tax()   	 
+    
+	def menu():  
+    	print("""Please select what kind of taxation you would like to have:
+            	1. Sparate
+            	2. Joint
+            	3. Compare
+            	4. Enter new personal income
+            	5. Exit
+            	""")
+   	 
+    	selection=input("Your Choice:")
+   	 
+    	if selection == '1':
+        	separate()
+        	print("="*250)
+        	menu()
+    	elif selection == '2':
+        	joint()
+        	print("="*250)
+        	menu()
+    	elif selection == '3':
+        	compare()
+        	menu()
+    	elif selection == "4":
+        	main()
+    	elif selection == '5':
+        	print("End")
+        	exit()
+    	else:
+        	print ("Unknown Option Selected!")
+        	menu()
+
+	menu()
+       	 
+if __name__ == '__main__':
+	main()
